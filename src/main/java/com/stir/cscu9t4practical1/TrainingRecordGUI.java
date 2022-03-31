@@ -27,9 +27,9 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JLabel labdist = new JLabel(" Distance (km):");
     private JButton addR = new JButton("Add");
     private JButton lookUpByDate = new JButton("Look Up");
-
+    private JButton lookAllByDate = new JButton("look All");
     private TrainingRecord myAthletes = new TrainingRecord();
-
+    private JButton RemoveEntry= new JButton("Remove");
     private JTextArea outputArea = new JTextArea(5, 50);
 
     public static void main(String[] args) {
@@ -73,6 +73,20 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         setSize(720, 200);
         setVisible(true);
         blankDisplay();
+        add(lookAllByDate);
+        lookAllByDate.addActionListener(this);
+        add(outputArea);
+        outputArea.setEditable(false);
+        setSize(720, 200);
+        setVisible(true);
+        blankDisplay();
+        add(RemoveEntry);
+        lookAllByDate.addActionListener(this);
+        add(outputArea);
+        outputArea.setEditable(false);
+        setSize(720, 200);
+        setVisible(true);
+        blankDisplay();
 
         // To save typing in new entries while testing, uncomment
         // the following lines (or add your own test cases)
@@ -88,6 +102,13 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         if (event.getSource() == lookUpByDate) {
             message = lookupEntry();
         }
+        if (event.getSource() == lookAllByDate) {
+            message = lookAllEntry();
+        }
+        if (event.getSource() == RemoveEntry) {
+            message = lookAllEntry();
+        }
+        
         outputArea.setText(message);
         blankDisplay();
     } // actionPerformed
@@ -117,6 +138,26 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         return message;
     }
 
+    public String lookAllEntry() {
+        int m = Integer.parseInt(month.getText());
+        int d = Integer.parseInt(day.getText());
+        int y = Integer.parseInt(year.getText());
+        outputArea.setText("looking up record ...");
+        String message = myAthletes.lookByEntry(d, m, y);
+        return message;
+    }
+   
+    public String RemoveEntry() {
+    	String n = name.getText();
+        int m = Integer.parseInt(month.getText());
+        int d = Integer.parseInt(day.getText());
+        int y = Integer.parseInt(year.getText());
+        outputArea.setText("deleting record ...");
+        String result = myAthletes.removeEntry(n, d, m, y);
+        outputArea.setText(result);
+        String message=("Removed the Record");
+        return message;
+     }
     public void blankDisplay() {
         name.setText("");
         day.setText("");
